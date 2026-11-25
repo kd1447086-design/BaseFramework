@@ -27,7 +27,7 @@ void Scene::Release()
 	// ‰æ‘œ‚Ì‰ğ•úˆ—
 	charaTex.Release();
 
-	 m_effectManager.Release();
+	 m_effectmanager.Release();
 }
 
 void Scene::ImGuiUpdate()

@@ -1,6 +1,6 @@
 #pragma once
-
 #include"effectmanager.h"
+#include"map.h"
 
 class Scene
 {

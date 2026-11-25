@@ -138,19 +138,19 @@
     <ClInclude Include="Src\Application\Scene.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="effect.h">
+    <ClInclude Include="Src\Application\effect.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="effectmanager.h">
+    <ClInclude Include="Src\Application\effectmanager.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="map.h">
+    <ClInclude Include="Src\Application\GaugeUI.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="Src\Application\map.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
-    <ClInclude Include="GaugeUI.h">
+    <ClInclude Include="Src\Application\Player.h">
       <Filter>Src\Application</Filter>
     </ClInclude>
   </ItemGroup>
@@ -218,19 +218,19 @@
     <ClCompile Include="Src\Application\Scene.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="effect.cpp">
+    <ClCompile Include="Src\Application\effect.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="effectmanager.cpp">
+    <ClCompile Include="Src\Application\effectmanager.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="map.cpp">
+    <ClCompile Include="Src\Application\GaugeUI.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="Src\Application\map.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
-    <ClCompile Include="GaugeUI.cpp">
+    <ClCompile Include="Src\Application\Player.cpp">
       <Filter>Src\Application</Filter>
     </ClCompile>
   </ItemGroup>

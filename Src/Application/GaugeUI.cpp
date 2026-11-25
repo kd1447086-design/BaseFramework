@@ -1,4 +1,4 @@
-#include "main.h"
+#include "../../プログラム/スケルトンプログラム/Src/Application/main.h"
 #include "GaugeUI.h"
 void GaugeUI::Init()
 {
