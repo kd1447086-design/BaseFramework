@@ -5,6 +5,27 @@
 void Map::Init()
 {
 	//１面==========================================================-
+
+	//休眠カプセル
+	sleep_pod1.Load("texture/研究所/休眠カプセル１.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル２.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル３.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル４.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル５.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル６.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル７.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル８.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル９.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１０.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１１.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１２.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１３.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１４.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１５.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１６.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１７.png");
+	sleep_pod1.Load("texture/研究所/休眠カプセル１８.png");
+
 	//ゴミ・廃材系
 	m_trash_bag_1.Load("texture/１面/ゴミ袋１.png");
 	m_trash_bag_2.Load("texture/１面/ゴミ袋２.png");
@@ -12,6 +33,7 @@ void Map::Init()
 	m_trash_bag_4.Load("texture/１面/ゴミ袋４.png");
 	m_trash_bag_5.Load("texture/１面/ゴミ袋５.png");
 	m_trash_bag_6.Load("texture/１面/ゴミ袋６.png");
+	m_trash_pile.Load("texture/ゴミの山.png");
 	m_cardboard_box_1.Load("texture/１面/ダンボール１.png");
 	m_cardboard_box_2.Load("texture/１面/ダンボール２.png");
 	m_cardboard_box_3.Load("texture/１面/ダンボール３.png");
@@ -46,8 +68,41 @@ void Map::Init()
 	m_plastic_bottle.Load("texture/１面/空きペットボトル.png");
 	m_empty_can.Load("texture/１面/空き缶.png");
 	m_wooden_crate.Load("texture/１面/箱.png");
-	//タイル
-	
+	//壁用タイル
+	m_tile_1.Load("texture/１面/タイル１.png");
+	m_tile_2.Load("texture/１面/タイル２.png");
+	m_tile_3.Load("texture/１面/タイル３.png");
+	m_tile_4.Load("texture/１面/タイル４.png");
+	m_tile_5.Load("texture/１面/タイル５.png");
+	m_tile_6.Load("texture/１面/タイル６.png");
+	m_tile_7.Load("texture/１面/タイル７.png");
+	m_tile_8.Load("texture/１面/タイル８.png");
+	m_tile_9.Load("texture/１面/タイル９.png");
+	m_tile_10.Load("texture/１面/タイル１０.png");
+	m_tile_11.Load("texture/１面/タイル１１.png");
+	m_tile_12.Load("texture/１面/タイル１２.png");
+	m_tile_13.Load("texture/１面/タイル１３.png");
+	m_tile_14.Load("texture/１面/タイル１４.png");
+	m_tile_15.Load("texture/１面/タイル１５.png");
+	m_tile_16.Load("texture/１面/タイル１６.png");
+	//床用タイル
+	m_floortile_1.Load("texture/１面/床タイル１.png");
+	m_floortile_2.Load("texture/１面/床タイル２.png");
+	m_floortile_3.Load("texture/１面/床タイル３.png");
+	m_floortile_4.Load("texture/１面/床タイル４.png");
+	m_floortile_5.Load("texture/１面/床タイル５.png");
+	m_floortile_6.Load("texture/１面/床タイル６.png");
+	m_floortile_7.Load("texture/１面/床タイル７.png");
+	m_floortile_8.Load("texture/１面/床タイル８.png");
+	m_floortile_9.Load("texture/１面/床タイル９.png");
+	m_floortile_10.Load("texture/１面/床タイル１０.png");
+	m_floortile_11.Load("texture/１面/床タイル１１.png");
+	m_floortile_12.Load("texture/１面/床タイル１２.png");
+	m_floortile_13.Load("texture/１面/床タイル１３.png");
+	m_floortile_14.Load("texture/１面/床タイル１４.png");
+	m_floortile_15.Load("texture/１面/床タイル１５.png");
+	m_floortile_16.Load("texture/１面/床タイル１６.png");
+
 
 	m_roadTex.Load("texture/ゴミの山.png");
 
@@ -64,34 +119,281 @@ void Map::Update()
 
 }
 
-//===================================================================
-//道の描画
-//===================================================================
-void Map::DrawRoads(int mapID, const Math::Vector2& cameraPos)
-{
-	auto DrawRoad = [&](int x, int y)
-	{
-		SHADER.m_spriteShader.DrawTex(&m_roadTex, x - (int)cameraPos.x, y - (int)cameraPos.y, 100, 100);
-	};
-	switch (mapID)
-	{
-	default:
-		break;
-	}
-}
 
 //===================================================================
 //マップ描画
 //===================================================================
 void Map::Draw(int mapID, const Math::Vector2& cameraPos)
 {
-	//地面描画するマップ
-	switch (mapID)
+	//床を描画
+	DrawFloors(mapID, cameraPos);
+
+	//天井を描画
+	DrawCeilings(mapID, cameraPos);
+
+	//設備
+	DrawFacilities(mapID, cameraPos);
+
+	//壁を描画
+	DrawRoads(mapID, cameraPos);
+
+	//瓦礫を描画
+	DrawDebris(mapID, cameraPos);
+
+	//装飾を描画
+	DrawDecorations(mapID, cameraPos);
+
+	//オブジェクトを描画
+	DrawObjects(mapID, cameraPos);
+
+}
+
+void Map::DrawRoads(int mapID, const Math::Vector2& cameraPos)
+{
+	//壁タイル描画
+	auto DrawTile = [&](KdTexture* tex, int x, int y)
 	{
-		DrawRoads(mapID, cameraPos);
-		DrawObjects(mapID, cameraPos);
-	default:
-		break;
+		SHADER.m_spriteShader.DrawTex(tex, x - (int)cameraPos.x, y - (int)cameraPos.y, 100, 100);
+	};
+	//上側の壁
+	for (int x = -850;x <= 850;x += 100)
+	{
+		DrawTile(&m_tile_1, x, 550);
+	}
+	//下側の壁
+	for (int x = -850;x <= 850;x += 100)
+	{
+		DrawTile(&m_tile_1, x, -550);
+	}
+	//左側の壁
+	for (int y = -450; y <= 450; y += 100)
+	{
+		DrawTile(&m_tile_1, -850, y);
+	}
+	//右側の壁
+	for (int y = -450; y <= 450; y += 100)
+	{
+		DrawTile(&m_tile_1, 850, y);
+	}
+
+}
+
+void Map::DrawFloors(int mapID, const Math::Vector2& cameraPos)
+{
+	//マップIDの確認
+	if (mapID < 0 || mapID >= 12)return;
+	
+	//床タイル描画
+	auto DrawFloor = [&](KdTexture* tex, int x, int y)
+	{
+		SHADER.m_spriteShader.DrawTex(tex, x - (int)cameraPos.x, y - (int)cameraPos.y, 100, 100);
+	};
+
+	//床タイル１６種類
+	KdTexture* floortiles[16] =
+	{
+		&m_floortile_1,
+		&m_floortile_2,
+		&m_floortile_3,
+		&m_floortile_4,
+		&m_floortile_5,
+		&m_floortile_6,
+		&m_floortile_7,
+		&m_floortile_8,
+		&m_floortile_9,
+		&m_floortile_10,
+		&m_floortile_11,
+		&m_floortile_12,
+		&m_floortile_13,
+		&m_floortile_14,
+		&m_floortile_15,
+		&m_floortile_16
+	};
+
+	//基本の床タイル
+	KdTexture* basictiles[9] =
+	{
+		floortiles[1],  //2
+		floortiles[3],  //4
+		floortiles[5],  //6
+		floortiles[6],  //7
+		floortiles[9],  //10
+		floortiles[11], //12
+		floortiles[12], //13
+		floortiles[14], //15
+		floortiles[15], //16
+	};
+	//瓦礫タイルを敷き詰める
+	KdTexture* damagetiles[2] =
+	{
+		floortiles[4],  //5
+		floortiles[10], //11
+	};
+	//金属・通気口タイルを敷き詰める
+	KdTexture* metaltiles[5] =
+	{
+		floortiles[0],  //1
+		floortiles[2],  //3
+		floortiles[7],  //8
+		floortiles[8],  //9
+		floortiles[13], //14
+	};
+	//床タイルを敷き詰める
+	for (int y = 0; y < 12; y++)
+	{
+		for (int x = 0; x < 18; x++)
+		{
+			KdTexture* tile = basictiles[(x + y * 3) % 9];
+
+			if (mapID == 0)
+			{
+				if ((x == 4 && y == 3) || (x == 12 && y == 8))
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 1)
+			{
+				if (x % 6 == 0 && y % 4 == 1)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 2)
+			{
+				if (x % 5 == 2 && y % 4 == 2)
+				{
+					tile = metaltiles[(x + y) % 5];
+				}
+			}
+			if (mapID == 3)
+			{
+				if ((x + y) % 11 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 4)
+			{
+				if ((x * 2 + y) % 13 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 5)
+			{
+				if ((x + y * 2) % 7 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 6)
+			{
+				if ((x * 3 + y * 2) % 17 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 7)
+			{
+				if ((x + y * 3) % 9 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+			if (mapID == 8)
+			{
+				if ((x + y) % 6 == 0)
+				{
+					tile = metaltiles[(x + y) % 5];
+				}
+			}
+			if (mapID == 9)
+			{
+				if ((x * 2 + y) % 7 == 0)
+				{
+					tile = metaltiles[(x + y) % 5];
+				}
+			}
+			if (mapID == 10)
+			{
+				if ((x + y * 2) % 15 == 0);
+				{
+					tile = metaltiles[(x + y) % 5];
+				}
+			}
+			if (mapID == 11)
+			{
+				if ((x + y) % 3 == 0)
+				{
+					tile = metaltiles[(x + y) % 5];
+				}
+				else if ((x * 2 + y) % 11 == 0)
+				{
+					tile = damagetiles[(x + y) % 2];
+				}
+			}
+
+			DrawFloor(tile, -850 + x * 100, -550 + y * 100);
+		}
+	}
+}
+
+void Map::DrawCeilings(int mapID, const Math::Vector2& cameraPos)
+{
+	if (mapID < 0 || mapID >= m_ceilingObjects.size())
+	{
+		return;
+	}
+	for (const auto& obj : m_ceilingObjects[mapID])
+	{
+		if (obj.tex != nullptr)
+		{
+			SHADER.m_spriteShader.DrawTex(obj.tex, obj.pos.x - cameraPos.x, obj.pos.y - cameraPos.y, obj.width, obj.height);
+		}
+	}
+}
+
+void Map::DrawFacilities(int mapID, const Math::Vector2& cameraPos)
+{
+	if (mapID < 0 || mapID >= m_facilityObjects.size())
+	{
+		return;
+	}
+	for (const auto& obj : m_facilityObjects[mapID])
+	{
+		if (obj.tex != nullptr)
+		{
+			SHADER.m_spriteShader.DrawTex(obj.tex, obj.pos.x - cameraPos.x, obj.pos.y - cameraPos.y, obj.width, obj.height);
+		}
+	}
+}
+void Map::DrawDebris(int mapID, const Math::Vector2& cameraPos)
+{
+	if (mapID < 0 || mapID >= m_debrisObjects.size())
+	{
+		return;
+	}
+	for (const auto& obj : m_debrisObjects[mapID])
+	{
+		if (obj.tex != nullptr)
+		{
+			SHADER.m_spriteShader.DrawTex(obj.tex, obj.pos.x - cameraPos.x, obj.pos.y - cameraPos.y, obj.width, obj.height);
+		}
+	}
+}
+void Map::DrawDecorations(int mapID, const Math::Vector2& cameraPos)
+{
+	if (mapID < 0 || mapID >= m_decorationObjects.size())
+	{
+		return;
+	}
+	for (const auto& obj : m_decorationObjects[mapID])
+	{
+		if (obj.tex != nullptr)
+		{
+			SHADER.m_spriteShader.DrawTex(obj.tex, obj.pos.x - cameraPos.x, obj.pos.y - cameraPos.y, obj.width, obj.height);
+		}
 	}
 }
 
@@ -102,58 +404,352 @@ void Map::InitObjects()
 	//マップID０～９９９の配置リストを用意
 	m_mapObjects.resize(1000);
 
-	//各マップのオブジェクトを用意
-	
+	m_floorObjects.clear();
+	m_floorObjects.resize(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_floorObjects[i] = {};
+	}
+
+	m_ceilingObjects.clear();
+	m_ceilingObjects.resize(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_ceilingObjects[i] = {};
+	}
+
+	m_facilityObjects.clear();
+	m_facilityObjects.resize(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_facilityObjects[i] = {};
+	}
+
+	m_debrisObjects.clear();
+	m_debrisObjects.resize(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_debrisObjects[i] = {};
+	}
+
+	m_decorationObjects.clear();
+	m_decorationObjects.resize(12);
+	for (int i = 0; i < 12; i++)
+	{
+		m_decorationObjects[i] = {};
+	}
+
 	//============================================
 	//１面
 	//============================================
-	
+	// m_mapObjects　　　　一般オブジェクト
+	// m_floorobjects　　　床
+	// m_ceilingobjects　　天井
+	// m_facilityObjects　 配線・設備
+	// m_debrisObjects　　 瓦礫
+	// m_decorations　　　 装飾
+
 	//マップ０
 	m_mapObjects[0] =
 	{
-
+		//またあとで決める
 	};
-	m_mapObjects[1] =
+	m_floorObjects[0] =
 	{
 
 	};
+	m_ceilingObjects[0] =
+	{
+
+	};
+	m_facilityObjects[0] =
+	{
+
+	};
+	m_debrisObjects[0] =
+	{
+
+	};
+	m_decorationObjects[0] =
+	{
+
+	};
+
+	m_mapObjects[1] =
+	{
+		//ゴミの山があるエリア
+
+		//ゴミの山
+		{ &m_trash_pile,Math::Vector2(0,-300),1000,500 },
+
+	};
+	m_floorObjects[1] =
+	{
+
+	};
+	m_ceilingObjects[1] =
+	{
+
+	};
+	m_facilityObjects[1] =
+	{
+
+	};
+	m_debrisObjects[1] =
+	{
+
+	};
+	m_decorationObjects[1] =
+	{
+
+	};
+
 	m_mapObjects[2] =
 	{
 
 	};
+	m_floorObjects[2] =
+	{
+
+	};
+	m_ceilingObjects[2] =
+	{
+
+	};
+	m_facilityObjects[2] =
+	{
+
+	};
+	m_debrisObjects[2] =
+	{
+
+	};
+	m_decorationObjects[2] =
+	{
+
+	};
+
 	m_mapObjects[3] =
 	{
 
 	};
+	m_floorObjects[3] =
+	{
+
+	};
+	m_ceilingObjects[3] =
+	{
+
+	};
+	m_facilityObjects[3] =
+	{
+
+	};
+	m_debrisObjects[3] =
+	{
+
+	};
+	m_decorationObjects[3] =
+	{
+
+	};
+
 	m_mapObjects[4] =
 	{
 
 	};
+	m_floorObjects[4] =
+	{
+
+	};
+	m_ceilingObjects[4] =
+	{
+
+	};
+	m_facilityObjects[4] =
+	{
+
+	};
+	m_debrisObjects[4] =
+	{
+
+	};
+	m_decorationObjects[4] =
+	{
+
+	};
+
 	m_mapObjects[5] =
 	{
 
 	};
+	m_floorObjects[5] =
+	{
+
+	};
+	m_ceilingObjects[5] =
+	{
+
+	};
+	m_facilityObjects[5] =
+	{
+
+	};
+	m_debrisObjects[5] =
+	{
+
+	};
+	m_decorationObjects[5] =
+	{
+
+	};
+
 	m_mapObjects[6] =
 	{
 
 	};
+	m_floorObjects[6] =
+	{
+
+	};
+	m_ceilingObjects[6] =
+	{
+
+	};
+	m_facilityObjects[6] =
+	{
+
+	};
+	m_debrisObjects[6] =
+	{
+
+	};
+	m_decorationObjects[6] =
+	{
+
+	};
+
 	m_mapObjects[7] =
 	{
 
 	};
+	m_floorObjects[7] =
+	{
+
+	};
+	m_ceilingObjects[7] =
+	{
+
+	};
+	m_facilityObjects[7] =
+	{
+
+	};
+	m_debrisObjects[7] =
+	{
+
+	};
+	m_decorationObjects[7] =
+	{
+
+	};
+
 	m_mapObjects[8] =
 	{
 
 	};
+	m_floorObjects[8] =
+	{
+
+	};
+	m_ceilingObjects[8] =
+	{
+
+	};
+	m_facilityObjects[8] =
+	{
+
+	};
+	m_debrisObjects[8] =
+	{
+
+	};
+	m_decorationObjects[8] =
+	{
+
+	};
+
 	m_mapObjects[9] =
 	{
 
 	};
+	m_floorObjects[9] =
+	{
+
+	};
+	m_ceilingObjects[9] =
+	{
+
+	};
+	m_facilityObjects[9] =
+	{
+
+	};
+	m_debrisObjects[9] =
+	{
+
+	};
+	m_decorationObjects[9] =
+	{
+
+	};
+
 	m_mapObjects[10] =
 	{
 
 	};
+	m_floorObjects[10] =
+	{
+
+	};
+	m_ceilingObjects[10] =
+	{
+
+	};
+	m_facilityObjects[10] =
+	{
+
+	};
+	m_debrisObjects[10] =
+	{
+
+	};
+	m_decorationObjects[10] =
+	{
+
+	};
+
 	m_mapObjects[11] =
+	{
+
+	};
+	m_floorObjects[11] =
+	{
+
+	};
+	m_ceilingObjects[11] =
+	{
+
+	};
+	m_facilityObjects[11] =
+	{
+
+	};
+	m_debrisObjects[11] =
+	{
+
+	};
+	m_decorationObjects[11] =
 	{
 
 	};

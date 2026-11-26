@@ -14,6 +14,9 @@ private:
 
 	EffectManager m_effectmanager;
 
+	Map m_map;
+
+
 public:
 
 	// ‰Šúİ’è

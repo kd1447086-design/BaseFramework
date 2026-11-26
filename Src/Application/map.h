@@ -80,6 +80,14 @@ private:
 	KdTexture sleep_pod8;
 	KdTexture sleep_pod9;
 	KdTexture sleep_pod10;
+	KdTexture sleep_pod11;
+	KdTexture sleep_pod12;
+	KdTexture sleep_pod13;
+	KdTexture sleep_pod14;
+	KdTexture sleep_pod15;
+	KdTexture sleep_pod16;
+	KdTexture sleep_pod17;
+	KdTexture sleep_pod18;
 
 	//ゴミ・廃材系
 
@@ -89,6 +97,7 @@ private:
 	KdTexture m_trash_bag_4;           //ゴミ袋４
 	KdTexture m_trash_bag_5;           //ゴミ袋５
 	KdTexture m_trash_bag_6;           //ゴミ袋６
+	KdTexture m_trash_pile;            //ゴミの山
 	KdTexture m_cardboard_box_1;       //ダンボール１
 	KdTexture m_cardboard_box_2;       //ダンボール２
 	KdTexture m_cardboard_box_3;       //ダンボール３
@@ -130,7 +139,7 @@ private:
 	KdTexture m_empty_can;             //空きビン
 	KdTexture m_wooden_crate;          //箱
 
-	//タイル
+	//壁用タイル
 
 	KdTexture m_tile_1;
 	KdTexture m_tile_2;
@@ -148,6 +157,25 @@ private:
 	KdTexture m_tile_14;
 	KdTexture m_tile_15;
 	KdTexture m_tile_16;
+
+	//床用タイル
+
+	KdTexture m_floortile_1;
+	KdTexture m_floortile_2;
+	KdTexture m_floortile_3;
+	KdTexture m_floortile_4;
+	KdTexture m_floortile_5;
+	KdTexture m_floortile_6;
+	KdTexture m_floortile_7;
+	KdTexture m_floortile_8;
+	KdTexture m_floortile_9;
+	KdTexture m_floortile_10;
+	KdTexture m_floortile_11;
+	KdTexture m_floortile_12;
+	KdTexture m_floortile_13;
+	KdTexture m_floortile_14;
+	KdTexture m_floortile_15;
+	KdTexture m_floortile_16;
 
 	KdTexture m_roadTex;
 
@@ -173,9 +201,19 @@ private:
 
 	//道の描画
 	void DrawRoads(int mapID, const Math::Vector2& cameraPos);
+	void DrawFloors(int mapID, const Math::Vector2& cameraPos);
+	void DrawCeilings(int mapID, const Math::Vector2& cameraPos);
+	void DrawFacilities(int mapID, const Math::Vector2& cameraPos);
+	void DrawDebris(int mapID, const Math::Vector2& cameraPos);
+	void DrawDecorations(int mapID, const Math::Vector2& cameraPos);
 
 	//マップ接続情報初期化
 	void InitConnections();
 
+	std::vector<std::vector<MapObject>>m_floorObjects;
+	std::vector<std::vector<MapObject>>m_ceilingObjects;
+	std::vector<std::vector<MapObject>>m_facilityObjects;
+	std::vector<std::vector<MapObject>>m_debrisObjects;
+	std::vector<std::vector<MapObject>>m_decorationObjects;
 
 };

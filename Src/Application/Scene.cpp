@@ -5,13 +5,13 @@ void Scene::Draw2D()
 {
 
 	m_effectmanager.Draw();
-	// •¶Žš—ñ•\Ž¦
-	SHADER.m_spriteShader.DrawString(0, 0, "Hello World", Math::Vector4(1, 1, 0, 1));
+	m_map.Draw(0, Math::Vector2(0, 0));
 }
 
 void Scene::Update()
 {
 	m_effectmanager.Update();
+	m_map.Update();
 }
 
 void Scene::Init()
@@ -20,6 +20,7 @@ void Scene::Init()
 	charaTex.Load("player.png");
 
 	m_effectmanager.Init();
+	m_map.Init();
 }
 
 void Scene::Release()
@@ -28,6 +29,7 @@ void Scene::Release()
 	charaTex.Release();
 
 	 m_effectmanager.Release();
+	 m_map.Release();
 }
 
 void Scene::ImGuiUpdate()
