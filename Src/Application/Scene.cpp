@@ -5,13 +5,33 @@ void Scene::Draw2D()
 {
 
 	m_effectmanager.Draw();
-	m_map.Draw(0, Math::Vector2(0, 0));
+	m_map.Draw(0, m_cameraPos);
 }
 
 void Scene::Update()
 {
 	m_effectmanager.Update();
 	m_map.Update();
+
+	//âºÉJÉÅÉâà⁄ìÆ
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		m_cameraPos.x -= 5.0f;
+	}
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		m_cameraPos.x += 5.0f;
+	}
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		m_cameraPos.y += 5.0f;
+	}
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		m_cameraPos.y -= 5.0f;
+	}
+
+
 }
 
 void Scene::Init()

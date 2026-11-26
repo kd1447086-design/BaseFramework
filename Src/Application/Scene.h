@@ -16,6 +16,8 @@ private:
 
 	Map m_map;
 
+	//‰¼ƒJƒƒ‰À•W
+	Math::Vector2 m_cameraPos = { 0,0 };
 
 public:
 

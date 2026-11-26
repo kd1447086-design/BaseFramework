@@ -155,25 +155,17 @@ void Map::DrawRoads(int mapID, const Math::Vector2& cameraPos)
 	{
 		SHADER.m_spriteShader.DrawTex(tex, x - (int)cameraPos.x, y - (int)cameraPos.y, 100, 100);
 	};
+	KdTexture* walltiles[16] =
+	{
+		&m_tile_1,&m_tile_2,&m_tile_3,&m_tile_4,&m_tile_5,&m_tile_6,&m_tile_7,&m_tile_8,&m_tile_9,&m_tile_10,
+		&m_tile_11,&m_tile_12,&m_tile_13,&m_tile_14,&m_tile_15,&m_tile_16
+	};
+
 	//è„ë§ÇÃï«
 	for (int x = -850;x <= 850;x += 100)
 	{
+		int tileIndex = (x + 850) / 100 % 16;
 		DrawTile(&m_tile_1, x, 550);
-	}
-	//â∫ë§ÇÃï«
-	for (int x = -850;x <= 850;x += 100)
-	{
-		DrawTile(&m_tile_1, x, -550);
-	}
-	//ç∂ë§ÇÃï«
-	for (int y = -450; y <= 450; y += 100)
-	{
-		DrawTile(&m_tile_1, -850, y);
-	}
-	//âEë§ÇÃï«
-	for (int y = -450; y <= 450; y += 100)
-	{
-		DrawTile(&m_tile_1, 850, y);
 	}
 
 }
