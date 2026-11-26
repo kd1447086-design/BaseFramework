@@ -1,5 +1,3 @@
- Effect.cpp
-
 #include "main.h"
 #include "Effect.h"
 

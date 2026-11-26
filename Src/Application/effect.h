@@ -1,5 +1,3 @@
-Effect.h
-
 #pragma once
 
 class Effect
