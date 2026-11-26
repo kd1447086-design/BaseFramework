@@ -185,6 +185,9 @@ private:
 	//マップデータ
 	std::vector<MapData> m_maps;
 
+	//接続位置に表示させる扉
+	KdTexture m_doorTex;
+
 	//=====================================================================
 	//マップ内の画像　　　　　　ここまで
 	//=====================================================================
@@ -215,5 +218,11 @@ private:
 	std::vector<std::vector<MapObject>>m_facilityObjects;
 	std::vector<std::vector<MapObject>>m_debrisObjects;
 	std::vector<std::vector<MapObject>>m_decorationObjects;
+
+	//=======================================
+	//マップ配置データ　　重要！！
+	//=======================================
+	int m_mapData[12][18] = {};
+
 
 };

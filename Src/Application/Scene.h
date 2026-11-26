@@ -1,6 +1,7 @@
 #pragma once
 #include"effectmanager.h"
 #include"map.h"
+#include"Player.h"
 
 class Scene
 {
@@ -16,8 +17,14 @@ private:
 
 	Map m_map;
 
+	//現在のmapID
+	int m_currentMapID = 0;
+
 	//仮カメラ座標
 	Math::Vector2 m_cameraPos = { 0,0 };
+
+	//プレイヤー
+	Player m_player;
 
 public:
 
@@ -46,6 +53,8 @@ public:
 		static Scene instance;
 		return instance;
 	}
+
+
 };
 
 #define SCENE Scene::GetInstance()

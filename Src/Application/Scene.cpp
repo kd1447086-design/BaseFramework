@@ -3,35 +3,39 @@
 
 void Scene::Draw2D()
 {
-
 	m_effectmanager.Draw();
-	m_map.Draw(0, m_cameraPos);
+	m_map.Draw(m_currentMapID, m_cameraPos);
+	m_player.Draw();
 }
 
 void Scene::Update()
 {
 	m_effectmanager.Update();
 	m_map.Update();
+	m_player.Update();
 
-	//仮カメラ移動
-	if (GetAsyncKeyState('A') & 0x8000)
+	//マップ接続判定
+	for (const auto& connection : m_map.GetConnections())
 	{
-		m_cameraPos.x -= 5.0f;
-	}
-	if (GetAsyncKeyState('D') & 0x8000)
-	{
-		m_cameraPos.x += 5.0f;
-	}
-	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		m_cameraPos.y += 5.0f;
-	}
-	if (GetAsyncKeyState('S') & 0x8000)
-	{
-		m_cameraPos.y -= 5.0f;
-	}
+		//現在のマップと接続元が一致するか確認
+		if (connection.fromMapID != m_currentMapID)continue;
 
+		Math::Vector2 playerPos = m_player.GetPos();
 
+		//接続範囲に入ったか確認
+		if (playerPos.x >= connection.minX && playerPos.x <= connection.maxX && playerPos.y >= connection.minY && playerPos.y <= connection.maxY)
+		{
+			//マップ切り替え
+			m_currentMapID = connection.toMapID;
+
+			//移動先の出現座標へ移動
+			m_player.SetPos(connection.spawnPos);
+
+			break;
+		}
+	}
+	//カメラ　プレイヤー追従
+	m_cameraPos = m_player.GetPos();
 }
 
 void Scene::Init()
@@ -41,6 +45,7 @@ void Scene::Init()
 
 	m_effectmanager.Init();
 	m_map.Init();
+	m_player.Init();
 }
 
 void Scene::Release()

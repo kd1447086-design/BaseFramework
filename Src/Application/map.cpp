@@ -106,11 +106,30 @@ void Map::Init()
 
 	m_roadTex.Load("texture/ゴミの山.png");
 
+	m_doorTex.Load("texture/扉.png");
+
 	//マップ接続状況
 	InitConnections();
 
 	//マップオブジェクト配置
 	InitObjects();
+
+	//マップ配置データ初期化
+	for (int y = 0; y < 12; y++)
+	{
+		for (int x = 0; x < 18; x++)
+		{
+			m_mapData[y][x] = 0;
+		}
+	}
+	//部屋の床を配置
+	for (int y = 5; y < 7; y++)
+	{
+		for (int x = 2; x < 18; x++)
+		{
+			m_mapData[y][x] = 1;
+		}
+	}
 }
 
 //毎フレーム更新
@@ -146,6 +165,20 @@ void Map::Draw(int mapID, const Math::Vector2& cameraPos)
 	//オブジェクトを描画
 	DrawObjects(mapID, cameraPos);
 
+	//接続扉の描画
+	if (mapID == 0)
+	{
+		SHADER.m_spriteShader.DrawTex(&m_doorTex, 350 - (int)cameraPos.x, -500 - (int)cameraPos.y, 100, 100);
+	}
+	if (mapID == 1)
+	{
+		SHADER.m_spriteShader.DrawTex(&m_doorTex, 875 - (int)cameraPos.x, 0 - (int)cameraPos.y, 100, 100);
+	}
+	if (mapID == 2)
+	{
+		SHADER.m_spriteShader.DrawTex(&m_doorTex, -875 - (int)cameraPos.x, 0 - (int)cameraPos.y, 100, 100);
+	}
+
 }
 
 void Map::DrawRoads(int mapID, const Math::Vector2& cameraPos)
@@ -162,11 +195,18 @@ void Map::DrawRoads(int mapID, const Math::Vector2& cameraPos)
 	};
 
 	//上側の壁
-	for (int x = -850;x <= 850;x += 100)
+	for (int x = -650; x <= 850; x += 100)
 	{
-		int tileIndex = (x + 850) / 100 % 16;
-		DrawTile(&m_tile_1, x, 550);
+		int tileIndex = (x + 650) / 100 % 16;
+		DrawTile(walltiles[tileIndex], x, 150);
 	}
+	//下側の壁
+	for (int x = -650; x <= 850; x += 100)
+	{
+		int tileIndex = (x + 650) / 100 % 16;
+		DrawTile(walltiles[tileIndex], x, -150);
+	}
+
 
 }
 
@@ -309,7 +349,7 @@ void Map::DrawFloors(int mapID, const Math::Vector2& cameraPos)
 			}
 			if (mapID == 10)
 			{
-				if ((x + y * 2) % 15 == 0);
+				if ((x + y * 2) % 15 == 0)
 				{
 					tile = metaltiles[(x + y) % 5];
 				}
@@ -325,8 +365,11 @@ void Map::DrawFloors(int mapID, const Math::Vector2& cameraPos)
 					tile = damagetiles[(x + y) % 2];
 				}
 			}
-
-			DrawFloor(tile, -850 + x * 100, -550 + y * 100);
+			//床が配置されてるマスだけ描画
+			if (m_mapData[y][x] == 1)
+			{
+				DrawFloor(tile, -850 + x * 100, -550 + y * 100);
+			}
 		}
 	}
 }
