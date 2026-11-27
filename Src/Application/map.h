@@ -63,6 +63,11 @@ public:
 		return m_mapConnections;
 	}
 
+	void AddWall(int mapID, int x, int y, int width, int height);
+
+	//マップサイズ設定
+	void SetMapSize(int mapID, int width, int height);
+
 private:
 	//===================================================
 	//マップ内の画像　　　　　　ここから
@@ -222,7 +227,7 @@ private:
 	//=======================================
 	//マップ配置データ　　重要！！
 	//=======================================
-	int m_mapData[12][18] = {};
+	std::vector<std::vector<int>> m_mapData[12];
 
 
 };

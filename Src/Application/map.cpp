@@ -4,6 +4,20 @@
 
 void Map::Init()
 {
+	//各マップのサイズ設定
+	SetMapSize(0, 18, 12);
+	SetMapSize(1, 30, 20);
+	SetMapSize(2, 50, 35);
+	SetMapSize(3, 30, 20);
+	SetMapSize(4, 30, 20);
+	SetMapSize(5, 30, 20);
+	SetMapSize(6, 30, 20);
+	SetMapSize(7, 30, 20);
+	SetMapSize(8, 30, 20);
+	SetMapSize(9, 30, 20);
+	SetMapSize(10, 30, 20);
+	SetMapSize(11, 30, 20);
+
 	//１面==========================================================-
 
 	//休眠カプセル
@@ -114,12 +128,15 @@ void Map::Init()
 	//マップオブジェクト配置
 	InitObjects();
 
-	//マップ配置データ初期化
-	for (int y = 0; y < 12; y++)
+	//全マップ配置データ初期化
+	for (int map = 0; map < 12; map++)
 	{
-		for (int x = 0; x < 18; x++)
+		for (int y = 0; y < m_mapData[map].size(); y++)
 		{
-			m_mapData[y][x] = 0;
+			for (int x = 0; x < m_mapData[map][y].size(); x++)
+			{
+				m_mapData[map][y][x] = 0;
+			}
 		}
 	}
 	//部屋の床を配置
@@ -127,9 +144,32 @@ void Map::Init()
 	{
 		for (int x = 2; x < 18; x++)
 		{
-			m_mapData[y][x] = 1;
+			m_mapData[0][y][x] = 1;
 		}
 	}
+
+	//マップ１の床を配置
+	for (int y = 0; y < 20; y++)
+	{
+		for (int x = 0; x < 30; x++)
+		{
+			m_mapData[1][y][x] = 1;
+		}
+	}
+	for (int y = 0; y < 35; y++)
+	{
+		for (int x = 0; x < 50; x++)
+		{
+			m_mapData[2][y][x] = 1;
+		}
+	}
+
+
+
+
+
+
+
 }
 
 //毎フレーム更新
@@ -271,9 +311,9 @@ void Map::DrawFloors(int mapID, const Math::Vector2& cameraPos)
 		floortiles[13], //14
 	};
 	//床タイルを敷き詰める
-	for (int y = 0; y < 12; y++)
+	for (int y = 0; y < m_mapData[mapID].size(); y++)
 	{
-		for (int x = 0; x < 18; x++)
+		for (int x = 0; x < m_mapData[mapID][y].size(); x++)
 		{
 			KdTexture* tile = basictiles[(x + y * 3) % 9];
 
@@ -366,7 +406,7 @@ void Map::DrawFloors(int mapID, const Math::Vector2& cameraPos)
 				}
 			}
 			//床が配置されてるマスだけ描画
-			if (m_mapData[y][x] == 1)
+			if (m_mapData[mapID][y][x] == 1)
 			{
 				DrawFloor(tile, -850 + x * 100, -550 + y * 100);
 			}
@@ -1208,5 +1248,22 @@ void Map::InitConnections()
 
 void Map::Release()
 {
+
+}
+
+//===================================
+//サイズ設定処理
+//===================================
+void Map::SetMapSize(int mapID, int width, int height)
+{
+	if (mapID < 0 || mapID >= 12)return;
+	if (width <= 0 || height <= 0)return;
+
+	m_mapData[mapID].resize(height);
+
+	for (int y = 0; y < height; y++)
+	{
+		m_mapData[mapID][y].resize(width, 0);
+	}
 
 }

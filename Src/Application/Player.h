@@ -23,6 +23,8 @@ public:
 		m_pos = pos;
 	}
 
+	Math::Rectangle GetHitBox()const;
+
 private:
 
 	//プレイヤーの向き
@@ -42,6 +44,10 @@ private:
 
 	//プレイヤー座標
 	Math::Vector2 m_pos = { 0,0 };
+
+	//プレイヤーの当たり判定
+	float m_hitWidth = 40.0f;
+	float m_hitHeight = 20.0f;
 
 	//プレイヤーが移動中か
 	bool m_isMoving = false;

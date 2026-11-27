@@ -1,6 +1,17 @@
 #include"main.h"
 #include"Player.h"
 
+//ƒvƒŒƒCƒ„[‚Ì‘«Œ³‚Ì“–‚½‚è”»’è‚ğæ“¾
+Math::Rectangle Player::GetHitBox()const
+{
+	return{
+		(long)(m_pos.x - m_hitWidth / 2),
+		(long)(m_pos.y - m_hitHeight / 2),
+		(long)(m_pos.x - m_hitWidth / 2),
+		(long)(m_pos.y - m_hitHeight / 2)
+	};
+}
+
 //‰Šú‰»
 void Player::Init()
 {
