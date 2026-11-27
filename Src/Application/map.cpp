@@ -47,7 +47,7 @@ void Map::Init()
 	m_trash_bag_4.Load("texture/‚P–Ê/ƒSƒ~‘Ü‚S.png");
 	m_trash_bag_5.Load("texture/‚P–Ê/ƒSƒ~‘Ü‚T.png");
 	m_trash_bag_6.Load("texture/‚P–Ê/ƒSƒ~‘Ü‚U.png");
-	m_trash_pile.Load("texture/ƒSƒ~‚ÌR.png");
+	m_trash_pile.Load("texture/‚²‚İ‚ÌR.png");
 	m_cardboard_box_1.Load("texture/‚P–Ê/ƒ_ƒ“ƒ{[ƒ‹‚P.png");
 	m_cardboard_box_2.Load("texture/‚P–Ê/ƒ_ƒ“ƒ{[ƒ‹‚Q.png");
 	m_cardboard_box_3.Load("texture/‚P–Ê/ƒ_ƒ“ƒ{[ƒ‹‚R.png");
@@ -74,7 +74,7 @@ void Map::Init()
 	m_rock_6.Load("texture/‚P–Ê/Šâ‚U.png");
 	m_rock_7.Load("texture/‚P–Ê/Šâ‚V.png");
 	//‹ó‚«—eŠí
-	m_traffic_cone.Load("texture/‚P–Ê/ƒJƒ‰[ƒR[ƒ“.png");
+	m_traffic_cone.Load("texture/ƒJƒ‰[ƒR[ƒ“.png");
 	m_bucket_1.Load("texture/‚P–Ê/ƒoƒPƒc‚P.png");
 	m_bucket_2.Load("texture/‚P–Ê/ƒoƒPƒc‚Q.png");
 	m_empty_bottle_1.Load("texture/‚P–Ê/‹ó‚«ƒrƒ“‚P.png");
@@ -118,7 +118,7 @@ void Map::Init()
 	m_floortile_16.Load("texture/‚P–Ê/°ƒ^ƒCƒ‹‚P‚U.png");
 
 
-	m_roadTex.Load("texture/ƒSƒ~‚ÌR.png");
+	m_roadTex.Load("texture/‚²‚İ‚ÌR.png");
 
 	m_doorTex.Load("texture/”à.png");
 
@@ -554,8 +554,13 @@ void Map::InitObjects()
 	{
 		//ƒSƒ~‚ÌR‚ª‚ ‚éƒGƒŠƒA
 
-		//ƒSƒ~‚ÌR
-		{ &m_trash_pile,Math::Vector2(0,-300),1000,500 },
+		//ƒSƒ~‚ÌR•ƒSƒ~
+		{ &m_trash_pile,Math::Vector2(-500,140),1000,500 },
+		{ &m_trash_bag_1,Math::Vector2(300,100),100,100 },
+		{ &m_trash_bag_2,Math::Vector2(600,110),100,100 },
+		{ &m_trash_bag_3,Math::Vector2(400,130),100,100 },
+		//ƒJƒ‰[ƒR[ƒ“
+		{ &m_traffic_cone,Math::Vector2(500,100),100,100 },
 
 	};
 	m_floorObjects[1] =
@@ -832,6 +837,7 @@ void Map::InitObjects()
 	//================================================
 	//‚Q–Ê
 	//================================================
+	/*
 	m_mapObjects[12] =
 	{
 
@@ -1188,6 +1194,7 @@ void Map::InitObjects()
 	{
 
 	};
+	*/
 
 }
 
@@ -1217,7 +1224,7 @@ void Map::InitConnections()
 	m_mapConnections =
 	{
 		//cˆÚ“®===========================================
-		{ 0,1,300,400,-550,-450,Math::Vector2(0,500) },
+		{ 0,1,300,400,-50,-40,Math::Vector2(-500,500) },
 		{ 1,2,850,900,-50,50,Math::Vector2(0,500) },
 		{ 2,1,-900,-850,-50,50,Math::Vector2(500,-450) },
 		{ 2,3,850,900,-50,50,Math::Vector2(0,500) },
