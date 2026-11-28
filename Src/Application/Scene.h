@@ -2,6 +2,7 @@
 #include"effectmanager.h"
 #include"map.h"
 #include"Player.h"
+#include"GaugeUI.h"
 
 class Scene
 {
@@ -25,6 +26,10 @@ private:
 
 	//ƒvƒŒƒCƒ„[
 	Player m_player;
+
+	GaugeUI hpGauge;
+	GaugeUI mpGauge;
+
 
 public:
 

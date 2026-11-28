@@ -4,12 +4,16 @@ class GaugeUI
 {
 private:
 
-    // HP
-    int m_maxHP = 100;
-    int m_currentHP = 100;
+    // ゲージの最大値
+    int m_maxValue = 100;
+    // ゲージの現在値
+    int m_currentValue = 100;
 
-    // ダメージ演出用HP
-    float m_damageHP = 100.0f;
+    // ダメージ演出用の値
+    float m_damageValue = 100.0f;
+
+    // ダメージ演出を使用するか
+    bool m_useDamageEffect = true;
 
     // ゲージの減少速度
     float m_damageSpeed = 40.0f;
@@ -22,8 +26,11 @@ private:
     float m_width = 200.0f;
     float m_height = 16.0f;
 
-public:
+    // ゲージの色
+    Math::Color m_gaugeColor =
+        Math::Color(0.0f, 1.0f, 0.0f, 1.0f);
 
+public:
     // 初期化
     void Init();
 
@@ -36,21 +43,33 @@ public:
     // 解放
     void Release();
 
-    // 現在HPを設定
-    void SetHP(int hp);
+    // ゲージの現在値
+    void SetValue(int value);
+    int GetValue() const { return m_currentValue; }
 
-    // 現在HPを取得
-    int GetHP() const { return m_currentHP; }
+    // ゲージの最大値
+    void SetMaxValue(int value);
+    int GetMaxValue() const { return m_maxValue; }
 
-    // 最大HPを設定
-    void SetMaxHP(int hp);
+    // ゲージの消費
+    void UseValue(int value);
 
-    // 最大HPを取得
-    int GetMaxHP() const { return m_maxHP; }
+    // 指定した数値を消費できるか確認
+    bool CanUseValue(int value) const;
+
+    // ゲージの回復
+    void RecoverValue(int value);
 
     // ゲージの位置を設定
     void SetPosition(float x, float y);
 
     // ゲージの大きさを設定
     void SetSize(float width, float height);
+
+    // ゲージの色を設定
+    void SetColor(Math::Color color);
+
+    // ダメージ演出のON・OFF
+    void SetDamageEffect(bool enable);
+
 };

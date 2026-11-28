@@ -4,26 +4,32 @@
 // 初期化
 void GaugeUI::Init()
 {
-    // HPを初期化
-    m_maxHP = 100;
-    m_currentHP = 100;
+    // ゲージの初期値
+    m_maxValue = 100;
+    m_currentValue = 100;
+    m_damageValue = (float)m_currentValue;
 
-    // ダメージ演出用HPを初期化
-    m_damageHP = (float)m_currentHP;
 }
 
 // 更新
 void GaugeUI::Update()
 {
-    // ダメージゲージを遅れて減少させる
-    if (m_damageHP > m_currentHP)
+    // 遅延演出を使わない場合
+    if (m_useDamageEffect == false)
     {
-        m_damageHP -= m_damageSpeed / 60.0f;
+        m_damageValue = (float)m_currentValue;
+        return;
+    }
 
-        // 現在HPより小さくならないようにする
-        if (m_damageHP < m_currentHP)
+    // ダメージゲージを遅れて減少させる
+    if (m_damageValue > m_currentValue)
+    {
+        m_damageValue -= m_damageSpeed / 60.0f;
+
+        // 現在値より小さくならないようにする
+        if (m_damageValue < m_currentValue)
         {
-            m_damageHP = (float)m_currentHP;
+            m_damageValue = (float)m_currentValue;
         }
     }
 }
@@ -43,58 +49,51 @@ void GaugeUI::Draw()
         &bgColor
     );
 
-    // ダメージゲージの割合
-    float damageRate = m_damageHP / m_maxHP;
 
-    // ダメージゲージの幅
-    float damageWidth = m_width * damageRate;
-
-    // ダメージゲージの位置
-    float damagePosX = m_posX - (m_width - damageWidth) / 2;
-
-    // ダメージゲージの色
-    Math::Color damageColor(1.0f, 0.7f, 0.0f, 1.0f);
-
-    // ダメージゲージを描画
-    SHADER.m_spriteShader.DrawBox(
-        (int)damagePosX,
-        (int)m_posY,
-        (int)damageWidth / 2,
-        (int)m_height / 2,
-        &damageColor
-    );
-
-    // HPゲージの割合
-    float hpRate = (float)m_currentHP / m_maxHP;
-
-    // HPゲージの幅
-    float hpWidth = m_width * hpRate;
-
-    // HPゲージの位置
-    float hpPosX = m_posX - (m_width - hpWidth) / 2;
-
-    // HPゲージの色
-    Math::Color hpColor(0.0f, 1.0f, 0.0f, 1.0f);
-
-    // HPの割合に応じて色を変更
-    if (hpRate <= 0.2f)
+    // 遅延演出がONの場合だけ描画
+    if (m_useDamageEffect == true)
     {
-        // HPが20%以下なら赤
-        hpColor = Math::Color(1.0f, 0.0f, 0.0f, 1.0f);
-    }
-    else if (hpRate <= 0.5f)
-    {
-        // HPが50%以下なら黄色
-        hpColor = Math::Color(1.0f, 1.0f, 0.0f, 1.0f);
+        // ダメージゲージの割合
+        float damageRate = m_damageValue / m_maxValue;
+
+        // ダメージゲージの幅
+        float damageWidth = m_width * damageRate;
+
+        // ダメージゲージの位置
+        float damagePosX = m_posX - (m_width - damageWidth) / 2;
+
+        // ダメージゲージの色
+        Math::Color damageColor(1.0f, 0.7f, 0.0f, 1.0f);
+
+        // ダメージゲージを描画
+        SHADER.m_spriteShader.DrawBox(
+            (int)damagePosX,
+            (int)m_posY,
+            (int)damageWidth / 2,
+            (int)m_height / 2,
+            &damageColor
+        );
     }
 
-    // HPゲージを描画
+    // 現在値の割合
+    float valueRate = (float)m_currentValue / m_maxValue;
+
+    // ゲージの幅
+    float valueWidth = m_width * valueRate;
+
+    // ゲージの位置
+    float valuePosX = m_posX - (m_width - valueWidth) / 2;
+
+    Math::Color valueColor = m_gaugeColor;
+
+
+    //ゲージを描画
     SHADER.m_spriteShader.DrawBox(
-        (int)hpPosX,
+        (int)valuePosX,
         (int)m_posY,
-        (int)hpWidth / 2,
+        (int)valueWidth / 2,
         (int)m_height / 2,
-        &hpColor
+        &valueColor
     );
 }
 
@@ -103,53 +102,124 @@ void GaugeUI::Release()
 {
 }
 
-// 現在HPを設定
-void GaugeUI::SetHP(int hp)
+//現在値を設定
+void GaugeUI::SetValue(int value)
 {
-    // HPを設定
-    m_currentHP = hp;
+    // 現在値を設定
+    m_currentValue = value;
 
-    // HPが最大値を超えないようにする
-    if (m_currentHP > m_maxHP)
+    // 最大値を超えないようにする
+    if (m_currentValue > m_maxValue)
     {
-        m_currentHP = m_maxHP;
+        m_currentValue = m_maxValue;
     }
 
-    // HPがマイナスにならないようにする
-    if (m_currentHP < 0)
+    // 0未満にならないようにする
+    if (m_currentValue < 0)
     {
-        m_currentHP = 0;
+        m_currentValue = 0;
     }
 
     // 回復した場合はダメージゲージも合わせる
-    if (m_damageHP < m_currentHP)
+    if (m_damageValue < m_currentValue)
     {
-        m_damageHP = (float)m_currentHP;
+        m_damageValue = (float)m_currentValue;
+    }
+
+}
+
+// 現在値を設定
+void GaugeUI::SetMaxValue(int value)
+{
+    // 最大値が0以下にならないようにする
+    if (value < 1)
+    {
+        value = 1;
+    }
+
+    m_maxValue = value;
+
+    // 現在値が最大値を超えたら調整
+    if (m_currentValue > m_maxValue)
+    {
+        m_currentValue = m_maxValue;
+    }
+
+    // ダメージゲージも最大値に合わせる
+    if (m_damageValue > m_maxValue)
+    {
+        m_damageValue = (float)m_maxValue;
+    }
+
+}
+
+// ゲージの消費
+void GaugeUI::UseValue(int value)
+{
+    // マイナスの値は処理しない
+    if (value <= 0)
+    {
+        return;
+    }
+
+
+    // 消費できるか確認
+    if (CanUseValue(value) == false)
+    {
+        return;
+    }
+
+    m_currentValue -= value;
+
+    // 0未満にならないようにする
+    if (m_currentValue < 0)
+    {
+        m_currentValue = 0;
     }
 }
 
-// 最大HPを設定
-void GaugeUI::SetMaxHP(int hp)
+
+// 指定した数値を消費できるか確認
+bool GaugeUI::CanUseValue(int value) const
 {
-    // 最大HPが0以下にならないようにする
-    if (hp < 1)
+    // 0以下の値は消費できない
+    if (value <= 0)
     {
-        hp = 1;
+        return false;
     }
 
-    m_maxHP = hp;
-
-    // 現在HPが最大HPを超えたら調整
-    if (m_currentHP > m_maxHP)
+    // 現在値が消費量以上なら使用できる
+    if (m_currentValue >= value)
     {
-        m_currentHP = m_maxHP;
+        return true;
     }
 
-    // ダメージゲージも最大HPに合わせる
-    if (m_damageHP > m_maxHP)
+    return false;
+
+}
+
+
+// ゲージの回復
+void GaugeUI::RecoverValue(int value)
+{
+    // マイナスの値は処理しない
+    if (value <= 0)
     {
-        m_damageHP = (float)m_maxHP;
+        return;
     }
+
+
+    m_currentValue += value;
+
+    // 最大値を超えないようにする
+    if (m_currentValue > m_maxValue)
+    {
+        m_currentValue = m_maxValue;
+    }
+
+    // 回復したらダメージゲージも合わせる
+    m_damageValue = (float)m_currentValue;
+
 }
 
 // ゲージの位置を設定
@@ -177,3 +247,20 @@ void GaugeUI::SetSize(float width, float height)
     m_height = height;
 }
 
+// ゲージの色を設定
+void GaugeUI::SetColor(Math::Color color)
+{
+    m_gaugeColor = color;
+}
+
+// ダメージ演出のON・OFFを設定
+void GaugeUI::SetDamageEffect(bool enable)
+{
+    m_useDamageEffect = enable;
+
+    // 演出をOFFにした場合は現在値に合わせる
+    if (m_useDamageEffect == false)
+    {
+        m_damageValue = (float)m_currentValue;
+    }
+}

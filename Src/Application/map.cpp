@@ -559,9 +559,26 @@ void Map::InitObjects()
 		{ &m_trash_bag_1,Math::Vector2(300,100),100,100 },
 		{ &m_trash_bag_2,Math::Vector2(600,110),100,100 },
 		{ &m_trash_bag_3,Math::Vector2(400,130),100,100 },
+		{ &m_trash_bag_3,Math::Vector2(100,130),100,100 },
+		{ &m_trash_bag_3,Math::Vector2(200,80),100,100 },
+		{ &m_trash_bag_3,Math::Vector2(300,-55),100,100 },
+		{ &m_trash_bag_4,Math::Vector2(600,-55),100,100 },
+		{ &m_trash_bag_5,Math::Vector2(700,-50),100,100 },
 		//カラーコーン
 		{ &m_traffic_cone,Math::Vector2(500,100),100,100 },
-
+		{ &m_traffic_cone,Math::Vector2(100,-50),100,100 },
+		// バケツ
+		{ &m_bucket_1,Math::Vector2(750,100),50,50 },
+		{ &m_bucket_2,Math::Vector2(850,-75),50,50 },
+		// 空きビン
+		{ &m_empty_bottle_1,Math::Vector2(350,-80),30,50 },
+		{ &m_empty_bottle_2,Math::Vector2(450,100),30,50 },
+		// ペットボトル
+		{ &m_plastic_bottle,Math::Vector2(650,-80),30,50 },
+		// 空き缶
+		{ &m_empty_can,Math::Vector2(60,-70),50,50 },
+		// 木箱
+		{ &m_wooden_crate,Math::Vector2(850,100),100,100 },
 	};
 	m_floorObjects[1] =
 	{

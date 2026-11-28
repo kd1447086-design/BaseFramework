@@ -159,9 +159,13 @@
     <ClInclude Include="..\Library\tinygltf\stb_image.h" />
     <ClInclude Include="..\Library\tinygltf\stb_image_write.h" />
     <ClInclude Include="..\Library\tinygltf\tiny_gltf.h" />
+    <ClInclude Include="Src\Application\Animation.h" />
+    <ClInclude Include="Src\Application\CharacterState.h" />
     <ClInclude Include="Src\Application\effect.h" />
     <ClInclude Include="Src\Application\effectmanager.h" />
+    <ClInclude Include="Src\Application\Enemy.h" />
     <ClInclude Include="Src\Application\GaugeUI.h" />
+    <ClInclude Include="Src\Application\HitBox.h" />
     <ClInclude Include="Src\Application\map.h" />
     <ClInclude Include="Src\Application\Player.h" />
     <ClInclude Include="Src\Application\Scene.h" />
@@ -189,9 +193,12 @@
     <ClCompile Include="..\Library\imgui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Library\imgui\imgui_widgets.cpp" />
+    <ClCompile Include="Src\Application\Animation.cpp" />
     <ClCompile Include="Src\Application\effect.cpp" />
     <ClCompile Include="Src\Application\effectmanager.cpp" />
+    <ClCompile Include="Src\Application\Enemy.cpp" />
     <ClCompile Include="Src\Application\GaugeUI.cpp" />
+    <ClCompile Include="Src\Application\HitBox.cpp" />
     <ClCompile Include="Src\Application\map.cpp" />
     <ClCompile Include="Src\Application\Player.cpp" />
     <ClCompile Include="Src\Application\Scene.cpp" />

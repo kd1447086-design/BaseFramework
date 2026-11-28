@@ -1,11 +1,14 @@
 #include "main.h"
 #include "Scene.h"
+#include"GaugeUI.h"
 
 void Scene::Draw2D()
 {
 	m_effectmanager.Draw();
 	m_map.Draw(m_currentMapID, m_cameraPos);
-	m_player.Draw();
+	m_player.Draw(m_cameraPos);
+	hpGauge.Draw();
+	mpGauge.Draw();
 }
 
 void Scene::Update()
@@ -13,6 +16,9 @@ void Scene::Update()
 	m_effectmanager.Update();
 	m_map.Update();
 	m_player.Update();
+	hpGauge.Update();
+	mpGauge.Update();
+
 
 	//マップ接続判定
 	for (const auto& connection : m_map.GetConnections())
@@ -46,6 +52,24 @@ void Scene::Init()
 	m_effectmanager.Init();
 	m_map.Init();
 	m_player.Init();
+
+	// HPゲージ
+	hpGauge.Init();
+	hpGauge.SetMaxValue(100);
+	hpGauge.SetValue(100);
+	hpGauge.SetPosition(-490.0f, 310.0f);
+	hpGauge.SetSize(240.0f, 18.0f);
+	hpGauge.SetColor(Math::Color(0.0f, 1.0f, 0.0f, 1.0f));
+	hpGauge.SetDamageEffect(true);
+
+	// MPゲージ
+	mpGauge.Init();
+	mpGauge.SetMaxValue(80);
+	mpGauge.SetValue(80);
+	mpGauge.SetPosition(-490.0f, 282.0f);
+	mpGauge.SetSize(240.0f, 18.0f);
+	mpGauge.SetColor(Math::Color(0.0f, 0.3f, 1.0f, 1.0f));
+	mpGauge.SetDamageEffect(false);
 }
 
 void Scene::Release()
